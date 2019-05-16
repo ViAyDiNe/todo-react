@@ -6,7 +6,8 @@ class List extends React.Component {
 
   state = {
     list : [],
-    word : ""
+    word : "",
+    className: ""
   };
 
   changeHandler = (e) => {
@@ -17,19 +18,25 @@ class List extends React.Component {
   submitHandler = (e) => {
     console.log("word:", this.state.word);
     //clears the input field to blank
-    let entryField = ""
+    let entryField = "";
+    //adds the warning class to the input field
+    let classWarn = "warning";
+    //clears the class name of the input field on submit
+    let classReset = "";
 
     let updatedList = this.state.list;
 
     console.log("length:", this.state.word.length);
 
     if (this.state.word.length <1) {
+        this.setState({className: classWarn});
         alert("Let's add a item to the ToDO List")
     } else if (this.state.word.length > 30) {
+         this.setState({className: classWarn});
         alert("This is a ToDO List not a storyboard, keep it below 30 characters!!")
     } else {
         updatedList.push(this.state.word);
-        this.setState({word: entryField, list: updatedList});
+        this.setState({word: entryField, list: updatedList, className: classReset});
     }
     console.log("list:", this.state.list);
 
@@ -40,7 +47,7 @@ class List extends React.Component {
       // console.log("rendering");
       return (
         <div className="list">
-          <input onChange={this.changeHandler} value={this.state.word}/>
+          <input onChange={this.changeHandler} value={this.state.word} className={this.state.className}/>
           <button onClick={this.submitHandler}>+ToDo</button>
           <ul>
                 {this.state.list.map((item, index) =>
