@@ -32,7 +32,11 @@ class List extends React.Component {
         <div className="list">
           <input onChange={this.changeHandler} value={this.state.word}/>
           <button onClick={this.submitHandler}>+ToDo</button>
-
+          <ul>
+                {this.state.list.map((item, index) =>
+                    <li key={index}>{item}</li>
+                    )}
+          </ul>
         </div>
       );
     }
