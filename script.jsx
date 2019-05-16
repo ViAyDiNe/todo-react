@@ -42,6 +42,15 @@ class List extends React.Component {
 
   };
 
+  deleteHandler = (index) => {
+    let updatedList = this.state.list;
+    console.log(updatedList);
+    updatedList.splice(index,1);
+    this.setState({list: updatedList});
+    console.log(updatedList);
+
+  }
+
   render() {
       // render the list with a map() here
       // console.log("rendering");
@@ -51,7 +60,9 @@ class List extends React.Component {
           <button onClick={this.submitHandler}>+ToDo</button>
           <ul>
                 {this.state.list.map((item, index) =>
-                    <li key={index}>{item}</li>
+                    <li key={index} id={index}>
+                    {item}
+                    <button onClick={() =>this.deleteHandler(index)}>Remove</button></li>
                     )}
           </ul>
         </div>
