@@ -23,6 +23,8 @@ class List extends React.Component {
     let classWarn = "warning";
     //clears the class name of the input field on submit
     let classReset = "";
+    let date = moment().format("DD MMM YYYY");
+    let newEntry = [this.state.word, date];
 
     let updatedList = this.state.list;
 
@@ -35,7 +37,7 @@ class List extends React.Component {
          this.setState({className: classWarn});
         alert("This is a ToDO List not a storyboard, keep it below 30 characters!!")
     } else {
-        updatedList.push(this.state.word);
+        updatedList.push(newEntry);
         this.setState({word: entryField, list: updatedList, className: classReset});
     }
     console.log("list:", this.state.list);
@@ -54,17 +56,37 @@ class List extends React.Component {
   render() {
       // render the list with a map() here
       // console.log("rendering");
+
+      let listItems = this.state.list.map((item, index) =>{
+        return(
+            <tr key={index} id={index}>
+                <td>{index+1}</td>
+                <td>{item[0]}</td>
+                <td>{item[1]}</td>
+                <td>
+                    <button onClick={() =>this.deleteHandler(index)}>Remove</button>
+                </td>
+            </tr>
+            )
+      })
+
       return (
         <div className="list">
           <input onChange={this.changeHandler} value={this.state.word} className={this.state.className}/>
           <button onClick={this.submitHandler}>+ToDo</button>
-          <ul>
-                {this.state.list.map((item, index) =>
-                    <li key={index} id={index}>
-                    {item}
-                    <button onClick={() =>this.deleteHandler(index)}>Remove</button></li>
-                    )}
-          </ul>
+          <table>
+          <thead>
+            <tr>
+                <th>#</th>
+                <th>ToDo</th>
+                <th>Created</th>
+                <th>Action</th>
+            </tr>
+           </thead>
+           <tbody>
+                {listItems}
+           </tbody>
+           </table>
         </div>
       );
     }
