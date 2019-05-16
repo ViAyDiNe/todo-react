@@ -11,18 +11,28 @@ class List extends React.Component {
 
   changeHandler = (e) => {
     this.setState({word:e.target.value});
-    console.log("", e.target.value);
+    // console.log("", e.target.value);
   }
 
   submitHandler = (e) => {
+    console.log("word:", this.state.word);
     //clears the input field to blank
     let entryField = ""
 
-    console.log("word", this.state.word);
     let updatedList = this.state.list;
-    updatedList.push(this.state.word);
-    this.setState({word: entryField, list: updatedList});
-     console.log("list", this.state.list);
+
+    console.log("length:", this.state.word.length);
+
+    if (this.state.word.length <1) {
+        alert("Let's add a item to the ToDO List")
+    } else if (this.state.word.length > 30) {
+        alert("This is a ToDO List not a storyboard, keep it below 30 characters!!")
+    } else {
+        updatedList.push(this.state.word);
+        this.setState({word: entryField, list: updatedList});
+    }
+    console.log("list:", this.state.list);
+
   };
 
   render() {
